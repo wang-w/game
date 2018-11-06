@@ -1,5 +1,6 @@
 var GuaGame = function (fps, images, runCallback) {
     var g = {
+        scene: null,
         actions: {},
         keydowns: {},
         images: []
@@ -17,6 +18,14 @@ var GuaGame = function (fps, images, runCallback) {
     window.addEventListener('keyup', (event) => {
         g.keydowns[event.key] = false
     })
+    // update
+    g.update = function() {
+        g.scene.update()
+    }
+    // draw
+    g.draw = function() {
+        g.scene.draw()
+    }
     g.registerAction = function(key, callback) {
         g.actions[key] = callback
     }
@@ -66,12 +75,24 @@ var GuaGame = function (fps, images, runCallback) {
         }
         return image
     }
+
+    // g.runWithScene = function(scene) {
+    //     g.scene = scene
+    //     setTimeout(() => {
+    //         runloop()
+    //     }, 1000/window.fps)
+    // }
+
     g.run = function() {
-        runCallback(g)
+        g.scene = runCallback(g)
         //开始运行程序
         setTimeout(() => {
             runloop()
         }, 1000/window.fps)
+    }
+
+    g.replaceScene = function (scene) {
+        g.scene = scene
     }
 
     return g
