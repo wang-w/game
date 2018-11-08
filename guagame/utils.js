@@ -1,5 +1,9 @@
 var log = console.log.bind(console)
 
+var e = function (selector) {
+    return document.querySelector(selector)
+}
+
 var imgFromPath = function (path) {
     var img = new Image()
     img.src = path

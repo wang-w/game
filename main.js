@@ -34,17 +34,22 @@ var enableDebugMode = function (game, enable) {
 
 var __main = function () {
     var images = {
-        paddle: 'paddle.png',
-        ball: 'ball.png',
-        block: 'block.png',
+        paddle: 'img/paddle.png',
+        ball: 'img/ball.png',
+        block: 'img/block.png',
     }
 
-    var game = GuaGame(60, images, function (game) {
+    var game = Guagame.instance(60, images, function (game) {
         // var s = Scene(game)
         // g.runWithScene(s)
-        return Scene(game)
+        return SceneTitle.new(game)
     })
     enableDebugMode(game, true)
+
+    e('.j-editor').addEventListener('click', function () {
+        var editor = SceneEditor.new(game)
+        game.replaceScene(editor)
+    })
 
 }
 
