@@ -2,7 +2,7 @@ var Paddle = function(game) {
     console.log(game, 123)
     var o = game.imageByName('paddle')
     o.x = 100
-    o.y = 200
+    o.y = 260
     o.speed = 5
     o.move = function(x) {
         if (x < 0) {

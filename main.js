@@ -1,9 +1,10 @@
 var loadLevel = function (game, n) {
     n = n - 1
-    var levle = levels[n]
+    //var level = levels[n]
+    var level = JSON.parse(localStorage.levels)
     var blocks = []
-    for (var i = 0; i < levle.length; i++) {
-        var p = levle[i]
+    for (var i = 0; i < level.length; i++) {
+        var p = level[i]
         var b = Block(game, p)
         b.x = p[0]
         b.y = p[1]
@@ -47,10 +48,12 @@ var __main = function () {
     enableDebugMode(game, true)
 
     e('.j-editor').addEventListener('click', function () {
-        var editor = SceneEditor.new(game)
+        e('.j-table').classList.add('show')
+        var editor = SceneEditor.instance(game)
+        editor.clear()
+        localStorage.levels = JSON.stringify([])
         game.replaceScene(editor)
     })
-
 }
 
 __main();

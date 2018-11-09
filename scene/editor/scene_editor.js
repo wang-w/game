@@ -1,32 +1,57 @@
 class SceneEditor extends GuaScene {
     constructor(game) {
         super(game)
-        // game.registerAction('r', function () {
-        //     var s = SceneTitle.new(game)
-        //     game.replaceScene(s)
-        // })
-        game.canvas.addEventListener('click', function (event) {
-            // var x = event.offsetX
-            // var y = event.offsetY
-            // if (ball.hasPiont(x, y)) {
-            //     enableDrag = true
-            // }
-            log(event)
-        })
+        this.levels = []
+        this.init()
+    }
+
+    static instance(...args) {
+        this.i = this.i || new this(...args)
+        return this.i
     }
 
     draw() {
         this.game.context.fillText('编辑关卡', 100, 290);
-        var ctx = this.game.context
-        // ctx.fillRect(25, 25, 100, 100);
-        // ctx.clearRect(45, 45, 60, 60);
-        // ctx.strokeRect(50, 50, 50, 50);
-        for (var i=0;i<6;i++){
-            for (var j=0;j<6;j++){
-                // ctx.fillStyle = 'rgb(' + Math.floor(255-42.5*i) + ',' +
-                //     Math.floor(255-42.5*j) + ',0)';
-                ctx.strokeRect(j*25,i*25,25,25);
+    }
+
+    clear() {
+        var tds = document.querySelectorAll('.j-table td')
+        tds.forEach((item) => {
+            item.classList.remove('active')
+        })
+        this.levels = []
+    }
+
+    init() {
+        e('.j-table').addEventListener('click', (event) => {
+            var self = event.target
+            if (self.classList.contains('active')) {
+                self.classList.remove('active')
+            } else {
+                self.classList.add('active')
             }
-        }
+            var level = []
+            var x = Math.floor(event.layerX / 50) * 50
+            var y = Math.floor(event.layerY / 20) * 20
+            level[0] = x
+            level[1] = y
+            var index = findArray(this.levels, level)
+            if (index > -1) {
+                this.levels.splice(index, 1)
+            } else {
+                this.levels.push(level)
+            }
+        }, false)
+
+        e('.j-save').addEventListener('click', () => {
+            var levelsStr = JSON.stringify(this.levels)
+            localStorage.levels = levelsStr
+        })
+
+        e('.j-start').addEventListener('click', (event) => {
+            e('.j-table').classList.remove('show')
+            var s = Scene(this.game)
+            this.game.replaceScene(s)
+        })
     }
 }

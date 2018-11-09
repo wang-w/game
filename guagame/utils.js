@@ -26,3 +26,14 @@ var rectIntersect = function (rect1, rect2) {
         return false
     }
 }
+
+var findArray = function (arrList, arr) {
+    var index = -1
+    for (var i = 0; i < arrList.length; i++) {
+        var a = arrList[i]
+        if (JSON.stringify(a) == JSON.stringify(arr)) {
+            index = i
+        }
+    }
+    return index
+}

@@ -1,7 +1,7 @@
 var Ball = function(game) {
     var o = game.imageByName('ball')
     o.x = 100
-    o.y = 180
+    o.y = 250
     o.speedX = 2
     o.speedY = 2
     o.fired = false
